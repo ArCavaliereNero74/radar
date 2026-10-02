@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-/* Newsletter contrarian — tema unico chiaro, corpo bianco. Testata navy con radar animato; 3 comparti; schede a mercato / in attesa */
 :root{
   color-scheme:light;
   --bg:#eceff3; --surface:#ffffff; --surface-2:#f6f8fa; --band:#122038;
@@ -28,8 +27,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15p
 .pad{padding-left:clamp(16px,5vw,44px);padding-right:clamp(16px,5vw,44px)}
 .mono{font-family:var(--mono)}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
-
-/* ---- testata + radar ---- */
 .masthead{background:var(--band);color:#f4f6fb;padding-top:26px;padding-bottom:24px;position:relative;overflow:hidden}
 .masthead>*{position:relative;z-index:1}
 .radar{position:absolute;right:-26px;top:-34px;width:240px;height:240px;z-index:0;opacity:.9;pointer-events:none}
@@ -37,53 +34,30 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15p
 .radar-sweep{position:absolute;left:38px;top:38px;width:164px;height:164px;border-radius:50%;
   background:conic-gradient(from 0deg, rgba(150,180,255,.42) 0deg, rgba(150,180,255,.10) 32deg, rgba(150,180,255,0) 62deg, transparent 360deg);
   animation:radarspin 4.6s linear infinite}
-.radar-blip{position:absolute;left:155px;top:71px;width:9px;height:9px;border-radius:50%;background:#8197d6;
-  animation:blipglow 4.6s ease-out infinite}
-.radar-ripple{position:absolute;left:155px;top:71px;width:9px;height:9px;border-radius:50%;
-  border:1.5px solid rgba(170,195,255,.9);opacity:0;animation:blipripple 4.6s ease-out infinite}
+.radar-blip{position:absolute;left:155px;top:71px;width:9px;height:9px;border-radius:50%;background:#8197d6;animation:blipglow 4.6s ease-out infinite}
+.radar-ripple{position:absolute;left:155px;top:71px;width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(170,195,255,.9);opacity:0;animation:blipripple 4.6s ease-out infinite}
 @keyframes radarspin{to{transform:rotate(360deg)}}
-@keyframes blipglow{
-  0%,7%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}
-  12%{background:#eef4ff;box-shadow:0 0 16px 6px rgba(165,195,255,.95)}
-  26%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}
-  100%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}
-}
-@keyframes blipripple{
-  0%,8%{transform:scale(1);opacity:0}
-  13%{opacity:.85}
-  32%{transform:scale(3.6);opacity:0}
-  100%{transform:scale(3.6);opacity:0}
-}
-@media (prefers-reduced-motion:reduce){
-  .radar-sweep,.radar-blip,.radar-ripple{animation:none}
-  .radar-blip{background:#eef4ff;box-shadow:0 0 12px 4px rgba(165,195,255,.8)}
-  .radar-ripple{opacity:0}
-}
+@keyframes blipglow{0%,7%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}12%{background:#eef4ff;box-shadow:0 0 16px 6px rgba(165,195,255,.95)}26%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}100%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}}
+@keyframes blipripple{0%,8%{transform:scale(1);opacity:0}13%{opacity:.85}32%{transform:scale(3.6);opacity:0}100%{transform:scale(3.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.radar-sweep,.radar-blip,.radar-ripple{animation:none}.radar-blip{background:#eef4ff;box-shadow:0 0 12px 4px rgba(165,195,255,.8)}.radar-ripple{opacity:0}}
 .masthead .eyebrow{color:#9fb0d6}
 .wordmark{font-family:var(--serif);font-weight:700;font-size:clamp(27px,6.5vw,38px);letter-spacing:.01em;line-height:1;margin:14px 0 0;text-wrap:balance}
 .wordmark .r{color:#aab9e4}
 .mh-tag{font-family:var(--serif);font-size:16px;color:#c6d1e8;font-style:italic;margin-top:6px;max-width:34ch}
 .mh-meta{font-family:var(--mono);font-size:11px;color:#9fb0d6;line-height:1.7;margin-top:14px}
-
-/* ---- cappello ---- */
 .lede{padding-top:24px;padding-bottom:8px}
 .lede .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 .lede h2{font-family:var(--serif);font-weight:700;font-size:clamp(21px,4.5vw,25px);line-height:1.2;margin:0 0 10px;text-wrap:balance;letter-spacing:-.01em}
 .lede p{font-family:var(--serif);font-size:16.5px;color:var(--ink);margin:0 0 12px;max-width:62ch}
 .lede p.by{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
-
 .section{padding-top:24px;padding-bottom:4px}
 .shead{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:12px}
 .shead h3{font-family:var(--serif);font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
 .shead .meta{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
-
-/* ---- divisori comparto evidenti ---- */
 .secband{display:flex;align-items:center;gap:14px;margin:26px 0 14px}
 .secband:first-child{margin-top:6px}
-.secband .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
-  color:#fff;background:var(--accent);padding:7px 15px;border-radius:8px;box-shadow:0 2px 0 0 rgba(34,65,143,.18)}
+.secband .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--accent);padding:7px 15px;border-radius:8px;box-shadow:0 2px 0 0 rgba(34,65,143,.18)}
 .secband .ln{flex:1;height:2px;background:var(--accent);opacity:.18;border-radius:2px}
-
 .sig{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:620px){.sig{grid-template-columns:1fr}}
 .scard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
@@ -109,7 +83,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15p
 .entryrow .l{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .entryrow .vv{display:flex;align-items:baseline;gap:8px}
 .entryrow .v{font-family:var(--mono);font-size:16px;font-weight:600}
-.entryrow .tp{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--amber)}
 .rr{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:5px}
 .trighint{font-size:11px;color:var(--faint);font-family:var(--mono);margin:0 0 9px}
 .lv{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
@@ -123,9 +96,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15p
 .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:middle}
 .dot.tgt{background:var(--long)} .dot.inv{background:var(--short)}
 .scard .note{font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.45;border-top:1px dotted var(--line);padding-top:9px}
-
+.perfstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.perfstrip .pt{background:var(--surface);padding:11px 13px}
+.perfstrip .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.perfstrip .v{font-family:var(--serif);font-size:20px;font-weight:700;margin-top:3px;letter-spacing:-.01em}
+.perfstrip .v.pos{color:var(--long)} .perfstrip .v.neg{color:var(--short)}
+.perfstrip .v small{font-size:12px;color:var(--muted);font-weight:500}
+@media(max-width:560px){.perfstrip{grid-template-columns:repeat(2,1fr)}}
 .ledwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-table.led{border-collapse:collapse;width:100%;min-width:660px;font-size:12.5px}
+table.led{border-collapse:collapse;width:100%;min-width:640px;font-size:12.5px}
 table.led th,table.led td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line)}
 table.led th{background:var(--surface-2);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:500}
 table.led td:first-child,table.led th:first-child{text-align:left}
@@ -138,88 +117,79 @@ table.led td.num{font-family:var(--mono)}
 table.led tfoot td{font-weight:700;background:var(--surface-2);border-top:2px solid var(--ink)}
 .ledger-note{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.5}
 .ledger-note b{color:var(--ink)}
-
 .edge{display:flex;gap:18px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-left:3px solid var(--long);border-radius:12px;padding:18px 20px;background:var(--surface);margin-bottom:14px}
 .edge .fig{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--long);letter-spacing:-.02em;line-height:1;white-space:nowrap}
 .edge .figlab{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:6px}
 .edge .txt{font-size:14px;color:var(--ink);line-height:1.5;flex:1;min-width:240px}
 .thesis{font-family:var(--serif);font-size:16px;color:var(--ink);background:var(--surface-2);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 18px;max-width:64ch}
-
 .disclaimer{border-top:1px solid var(--line);margin-top:28px;padding-top:16px;padding-bottom:40px;font-size:11.5px;color:var(--faint);line-height:1.6}
 .disclaimer b{color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="sheet">
-
   <header class="masthead pad">
     <div class="radar">
       <svg viewBox="0 0 240 240" aria-hidden="true">
         <g fill="none" stroke="#a9bdea" stroke-opacity="0.5" stroke-width="1">
-          <circle cx="120" cy="120" r="30" stroke-dasharray="2 4"/>
-          <circle cx="120" cy="120" r="56" stroke-dasharray="2 4"/>
-          <circle cx="120" cy="120" r="82" stroke-dasharray="2 4"/>
+          <circle cx="120" cy="120" r="30" stroke-dasharray="2 4"/><circle cx="120" cy="120" r="56" stroke-dasharray="2 4"/><circle cx="120" cy="120" r="82" stroke-dasharray="2 4"/>
         </g>
-        <g stroke="#b7c7ec" stroke-opacity="0.6" stroke-width="1">
-          <line x1="120" y1="6" x2="120" y2="234"/>
-          <line x1="6" y1="120" x2="234" y2="120"/>
-        </g>
+        <g stroke="#b7c7ec" stroke-opacity="0.6" stroke-width="1"><line x1="120" y1="6" x2="120" y2="234"/><line x1="6" y1="120" x2="234" y2="120"/></g>
       </svg>
-      <div class="radar-sweep"></div>
-      <div class="radar-ripple"></div>
-      <div class="radar-blip"></div>
+      <div class="radar-sweep"></div><div class="radar-ripple"></div><div class="radar-blip"></div>
     </div>
     <div class="eyebrow">Newsletter settimanale · contrarian</div>
     <h1 class="wordmark">Trading <span class="r">Radar</span> Tips</h1>
     <div class="mh-tag">Leggiamo le Onde di Elliott — e scommettiamo contro</div>
-    <div class="mh-meta">N. 1 &middot; venerdì 2 ottobre 2026 &middot; timeframe H4</div>
+    <div class="mh-meta">N. 1 · venerdì 2 ottobre 2026 · timeframe H4</div>
   </header>
-
   <div class="lede pad">
     <div class="kick">Il punto della settimana</div>
-    <h2>Dollaro in forza: il segnale va aggressivo, e noi dalla parte opposta</h2>
-    <p>L'analisi a Onde di Elliott questa settimana vede <b>dollaro forte</b>: ribassi su cambi e materie prime, rialzi sugli indici azionari. La nostra regola è semplice e scomoda — la validazione dice che fare l'opposto di questi segnali, nel breve, ha un vantaggio. Quindi ogni posizione è <b>contraria al segnale</b>, con gestione coerente: stop a volatilità e obiettivo a <b>rapporto 3:1</b>. Dove il segnale prevede un ingresso a un livello non ancora raggiunto, la posizione resta <b>in attesa</b> del trigger invece di aprirsi a mercato.</p>
-    <p class="by">A cura di Andrea Giunta &middot; elaborazione automatizzata &middot; prezzi del 2 ott (pomeriggio UTC)</p>
+    <h2>Il posizionamento contrarian della settimana</h2>
+    <p>Al venerdì 2 ottobre 2026 il modello contrarian sulle Onde di Elliott è <b>4 long</b> e <b>4 short</b> sugli 8 strumenti: 3 a mercato e 5 in attesa del trigger. Direzione sempre contraria al segnale; stop a volatilità, obiettivo a <b>rapporto 3:1</b>.</p>
+    <p class="by">A cura di Andrea Giunta · elaborazione automatizzata · prezzi del 2 ott (pomeriggio UTC)</p>
   </div>
-
   <div class="section pad">
     <div class="shead"><h3>Le posizioni della settimana</h3><span class="meta">8 strumenti · a mercato o in attesa · R:R 3:1</span></div>
     <div id="sections"></div>
   </div>
-
   <div class="section pad">
-    <div class="shead"><h3>Le nostre operazioni</h3><span class="meta">track record · settimana 1</span></div>
+    <div class="shead"><h3>Le nostre operazioni</h3><span class="meta">track record · settimana</span></div>
+    <div class="perfstrip" id="perfstrip"></div>
     <div class="ledwrap"><table class="led" id="led"></table></div>
-    <p class="ledger-note"><b>Come si legge.</b> Ogni posizione è contraria al segnale a Onde di Elliott. Se il segnale è già attivo apriamo <b>a mercato</b>; se prevede un ingresso a un livello, restiamo <b>in attesa</b> del trigger. Lo <b>stop</b> è a volatilità (circa 1×ATR), l'<b>obiettivo</b> a tre volte il rischio: <b>R:R 3:1</b>. La riga si chiude al tocco dell'uno o dell'altro; ogni settimana aggiorniamo il mark-to-market. Il track record parte da oggi.</p>
+    <p class="ledger-note"><b>Come si legge.</b> Ogni posizione è contraria al segnale a Onde di Elliott. Se il segnale è già attivo apriamo <b>a mercato</b>; se prevede un ingresso a un livello, restiamo <b>in attesa</b> del trigger. Lo <b>stop</b> è a volatilità (circa 1×ATR), l'<b>obiettivo</b> a tre volte il rischio: <b>R:R 3:1</b>. La riga si chiude al tocco dell'uno o dell'altro.</p>
   </div>
-
   <div class="section pad">
     <div class="shead"><h3>Perché scommettiamo contro</h3><span class="meta">validazione in sample · lug–set 2026</span></div>
     <div class="edge">
       <div><div class="fig">+0,4 / +0,5 R</div><div class="figlab">per operazione</div></div>
       <div class="txt">Sulla base della validazione in sample, seguire una strategia <b>contrarian di breve termine</b> sui segnali indotti dalle Onde di Elliott produce un vantaggio misurabile: un'attesa di circa <b>+0,4 / +0,5 R per operazione</b>, con stop e target a volatilità (ATR) e costi di spread già inclusi.</div>
     </div>
-    <p class="thesis">È un indizio solido ma circoscritto: un campione iniziale, un solo regime di mercato, osservazioni correlate tra loro. Per questo accumuliamo le operazioni in avanti — settimana dopo settimana — fino a una verifica fuori campione. Il track record qui sopra è esattamente quel conteggio.</p>
+    <p class="thesis">È un indizio solido ma circoscritto: un campione iniziale, un solo regime di mercato, osservazioni correlate tra loro. Per questo accumuliamo le operazioni in avanti — settimana dopo settimana — fino a una verifica fuori campione.</p>
   </div>
-
   <div class="disclaimer pad">
     <b>Avvertenza.</b> Trading Radar Tips è una newsletter di ricerca e intrattenimento finanziario a cura di Andrea Giunta, prodotta tramite elaborazione automatizzata di segnali basati sull'analisi delle Onde di Elliott. Non è consulenza personalizzata né sollecitazione all'investimento. I prezzi sono indicativi, aggregati da fonti pubbliche al momento della pubblicazione. Le performance passate e ipotetiche non garantiscono risultati futuri. Ogni decisione resta a carico del lettore.
   </div>
-
 </div>
-
 <script>
-/* dir = direzione Radar (contraria al segnale Elliott). state: active = a mercato; pending = in attesa del trigger. R:R 3:1. */
-const SIG=[
- {sec:"Forex",nm:"Sterlina / Dollaro",code:"GBP/USD",cls:"Cambio",dir:"long",ell:"Short",st:4,pr:"4/5",state:"active",entry:"1,3209",tgt:"1,3447",tgtp:"+1,8%",stop:"1,3130",stopp:"−0,6%",note:"Segnale Elliott ribassista (dollaro forte, quinta onda): compriamo sterlina a mercato."},
- {sec:"Forex",nm:"Euro / Dollaro",code:"EUR/USD",cls:"Cambio",dir:"long",ell:"Short",st:4,pr:"4/5",state:"pending",entry:"1,1278",trigp:"+0,2%",mtm:"1,1251",tgt:"1,1481",tgtp:"+1,8%",stop:"1,1210",stopp:"−0,6%",note:"Il segnale vende solo sul rimbalzo verso 1,1278: lì compriamo contro. In attesa del trigger."},
- {sec:"Commodity",nm:"Oro",code:"XAU/USD",cls:"Materia prima",dir:"long",ell:"Short",st:4,pr:"4/5",state:"pending",entry:"4.237,4",trigp:"+1,3%",mtm:"4.183,0",tgt:"4.389,9",tgtp:"+3,6%",stop:"4.186,6",stopp:"−1,2%",note:"Il segnale vende sul recupero in area 4.237: lì entriamo long contro. In attesa."},
- {sec:"Commodity",nm:"Petrolio WTI",code:"USOIL",cls:"Materia prima",dir:"long",ell:"Short",st:3,pr:"3/5",state:"pending",entry:"97,69",trigp:"+7,9%",mtm:"90,50",tgt:"103,55",tgtp:"+6,0%",stop:"95,74",stopp:"−2,0%",note:"Il segnale attende il rimbalzo B fino a 97,69 per vendere: lì compriamo contro. Trigger lontano."},
- {sec:"Commodity",nm:"Bitcoin",code:"BTC/USDT",cls:"Cripto",dir:"short",ell:"Long",st:3,pr:"3/5",state:"pending",entry:"77.520",trigp:"−9,3%",mtm:"85.500",tgt:"70.543",tgtp:"−9,0%",stop:"79.846",stopp:"+3,0%",note:"Il segnale compra il pullback a 77.520: lì vendiamo contro, sulla rottura del supporto atteso."},
- {sec:"Equity",nm:"Dow Jones 30",code:"US30",cls:"Indice USA",dir:"short",ell:"Long",st:3,pr:"3/5",state:"pending",entry:"52.519",trigp:"+3,1%",mtm:"50.930",tgt:"50.470",tgtp:"−3,9%",stop:"53.201",stopp:"+1,3%",note:"Il segnale compra sopra la conferma 52.519: lì vendiamo contro il breakout. In attesa."},
- {sec:"Equity",nm:"Nasdaq 100",code:"US100",cls:"Indice USA",dir:"short",ell:"Long",st:4,pr:"4/5",state:"active",entry:"30.600",tgt:"29.407",tgtp:"−3,9%",stop:"30.998",stopp:"+1,3%",note:"Segnale Elliott rialzista (quinta onda in corso): vendiamo a mercato, stop ravvicinato."},
- {sec:"Equity",nm:"DAX 40",code:"DAX",cls:"Indice EU",dir:"short",ell:"Long",st:3,pr:"3/5",state:"active",entry:"25.255",tgt:"24.270",tgtp:"−3,9%",stop:"25.583",stopp:"+1,3%",note:"Segnale Elliott rialzista (onda iii attesa): vendiamo a mercato, prezzo proprio sullo 0.382."},
-];
+const SIG=[{"sec": "Forex", "nm": "Sterlina / Dollaro", "code": "GBP/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairGBUS", "entry": "1,3209", "tgt": "1,3447", "tgtp": "+1,8%", "stop": "1,3130", "stopp": "−0,6%", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Forex", "nm": "Euro / Dollaro", "code": "EUR/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "pending", "icon": "pairEUUS", "entry": "1,1278", "tgt": "1,1481", "tgtp": "+1,8%", "stop": "1,1210", "stopp": "−0,6%", "note": "Il segnale entra a 1,1278: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "1,1251", "trigp": "+0,2%"}, {"sec": "Commodity", "nm": "Oro", "code": "XAU/USD", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "pending", "icon": "ingot", "entry": "4.237,4", "tgt": "4.389,9", "tgtp": "+3,6%", "stop": "4.186,6", "stopp": "−1,2%", "note": "Il segnale entra a 4.237,4: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "4.183,0", "trigp": "+1,3%"}, {"sec": "Commodity", "nm": "Petrolio WTI", "code": "USOIL", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 3, "pr": "3/5", "state": "pending", "icon": "barrel", "entry": "97,69", "tgt": "103,55", "tgtp": "+6,0%", "stop": "95,74", "stopp": "−2,0%", "note": "Il segnale entra a 97,69: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "90,50", "trigp": "+7,9%"}, {"sec": "Commodity", "nm": "Bitcoin", "code": "BTC/USDT", "cls": "Cripto", "dir": "short", "ell": "Long", "st": 3, "pr": "3/5", "state": "pending", "icon": "btcDisc", "entry": "77.520", "tgt": "70.543", "tgtp": "−9,0%", "stop": "79.846", "stopp": "+3,0%", "note": "Il segnale entra a 77.520: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "85.500", "trigp": "−9,3%"}, {"sec": "Equity", "nm": "Dow Jones 30", "code": "US30", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 3, "pr": "3/5", "state": "pending", "icon": "fUS", "entry": "52.519", "tgt": "50.470", "tgtp": "−3,9%", "stop": "53.201", "stopp": "+1,3%", "note": "Il segnale entra a 52.519: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "50.930", "trigp": "+3,1%"}, {"sec": "Equity", "nm": "Nasdaq 100", "code": "US100", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "30.600", "tgt": "29.407", "tgtp": "−3,9%", "stop": "30.998", "stopp": "+1,3%", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}, {"sec": "Equity", "nm": "DAX 40", "code": "DAX", "cls": "Indice EU", "dir": "short", "ell": "Long", "st": 3, "pr": "3/5", "state": "active", "icon": "fDE", "entry": "25.255", "tgt": "24.270", "tgtp": "−3,9%", "stop": "25.583", "stopp": "+1,3%", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}];
+const PERF={"aperte": 3, "in_attesa": 5, "chiuse": 0, "win_rate_%": null, "R_totali": 0, "pl_totale_%": 0.0};
+(function(){
+  const chiuse=PERF["chiuse"]||0;
+  const wr = PERF["win_rate_%"]==null ? "—" : String(PERF["win_rate_%"]).replace(".",",")+"%";
+  const Rtot = PERF["R_totali"]||0, pl = PERF["pl_totale_%"]||0;
+  const Rs = (Rtot>0?"+":"")+String(Rtot).replace(".",",")+" R";
+  const pls = (pl>=0?"+":"−")+Math.abs(pl).toFixed(2).replace(".",",")+"%";
+  const cls=x=>x>0?"pos":(x<0?"neg":"");
+  const tiles=[
+    ["Operazioni chiuse", String(chiuse), ""],
+    ["Win rate", wr, ""],
+    ["R totali", chiuse?Rs:"—", chiuse?cls(Rtot):""],
+    ["P/L cumulato", chiuse?pls:"—", chiuse?cls(pl):""],
+  ];
+  document.getElementById("perfstrip").innerHTML = tiles.map(t=>
+    `<div class="pt"><div class="k">${t[0]}</div><div class="v ${t[2]}">${t[1]}</div></div>`).join("");
+})();
 const IC={};
 IC.fUS=`<svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="2" fill="#fff"/><g fill="#b22234"><rect width="26" height="2.57"/><rect y="5.14" width="26" height="2.57"/><rect y="10.28" width="26" height="2.57"/><rect y="15.43" width="26" height="2.57"/></g><rect width="11" height="10.28" rx="1" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.4" cy="2.2" r=".7"/><circle cx="5.5" cy="2.2" r=".7"/><circle cx="8.6" cy="2.2" r=".7"/><circle cx="4" cy="5.1" r=".7"/><circle cx="7" cy="5.1" r=".7"/><circle cx="2.4" cy="8" r=".7"/><circle cx="5.5" cy="8" r=".7"/><circle cx="8.6" cy="8" r=".7"/></g></svg>`;
 IC.fGB=`<svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="2" fill="#012169"/><g stroke="#fff" stroke-width="3"><path d="M0 0 L26 18"/><path d="M26 0 L0 18"/></g><g stroke="#C8102E" stroke-width="1.4"><path d="M0 0 L26 18"/><path d="M26 0 L0 18"/></g><rect x="10.5" width="5" height="18" fill="#fff"/><rect y="6.5" width="26" height="5" fill="#fff"/><rect x="11.6" width="2.8" height="18" fill="#C8102E"/><rect y="7.6" width="26" height="2.8" fill="#C8102E"/></svg>`;
@@ -230,7 +200,6 @@ IC.barrel=`<svg width="24" height="24" viewBox="0 0 24 24"><rect x="6" y="3.5" w
 IC.btcDisc=`<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F7931A"/><text x="12" y="16.6" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" font-weight="700" fill="#fff">&#8383;</text></svg>`;
 IC.pairGBUS=`<span class="pair">${IC.fGB.replace('width="26" height="18"','width="21" height="14.5"')}${IC.fUS.replace('width="26" height="18"','width="21" height="14.5"')}</span>`;
 IC.pairEUUS=`<span class="pair">${IC.fEU.replace('width="26" height="18"','width="21" height="14.5"')}${IC.fUS.replace('width="26" height="18"','width="21" height="14.5"')}</span>`;
-const ICON_BY_CODE={"GBP/USD":"pairGBUS","EUR/USD":"pairEUUS","XAU/USD":"ingot","USOIL":"barrel","BTC/USDT":"btcDisc","US30":"fUS","US100":"fUS","DAX":"fDE"};
 const SECS=["Forex","Commodity","Equity"];
 const CAP=s=>s.charAt(0).toUpperCase()+s.slice(1);
 function stars(n){let s="";for(let i=0;i<5;i++)s+=`<span class="${i<n?'on':'off'}">★</span>`;return `<span class="stars">${s}</span>`}
@@ -246,7 +215,7 @@ function card(s){
   return `
  <div class="scard ${s.dir}">
    <div class="hd">
-     <span class="ic">${IC[ICON_BY_CODE[s.code]]}</span>
+     <span class="ic">${IC[s.icon]||""}</span>
      <div class="nmwrap"><div class="nm">${s.nm}</div><div class="cls">${s.cls} · ${s.code}</div></div>
      <span class="dir ${s.dir}">${CAP(s.dir)}</span>
    </div>
@@ -263,10 +232,9 @@ function card(s){
  </div>`}
 document.getElementById("sections").innerHTML=SECS.map(sec=>{
   const items=SIG.filter(s=>s.sec===sec);
-  return `<div class="secband"><span class="lbl">${sec}</span><span class="ln"></span></div>
-  <div class="sig">${items.map(card).join("")}</div>`;
+  if(!items.length) return "";
+  return `<div class="secband"><span class="lbl">${sec}</span><span class="ln"></span></div><div class="sig">${items.map(card).join("")}</div>`;
 }).join("");
-
 const nAct=SIG.filter(s=>s.state==="active").length, nPen=SIG.length-nAct;
 document.getElementById("led").innerHTML=`
  <thead><tr><th>Strumento</th><th>Radar</th><th>Ingresso</th><th>Obiettivo</th><th>Stop</th><th>Stato</th></tr></thead>
@@ -278,7 +246,7 @@ document.getElementById("led").innerHTML=`
    <td class="num">${r.stop}</td>
    <td><span class="stbadge ${r.state}">${r.state==="active"?"aperta":"in attesa"}</span></td></tr>`).join("")}
  </tbody>
- <tfoot><tr><td>Performance assoluta</td><td></td><td></td><td></td><td class="num">0,00%</td><td>${nAct} a mercato · ${nPen} in attesa</td></tr></tfoot>`;
+ <tfoot><tr><td>Posizioni correnti</td><td></td><td></td><td></td><td></td><td>${nAct} a mercato · ${nPen} in attesa</td></tr></tfoot>`;
 </script>
 </body>
 </html>
