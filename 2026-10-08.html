@@ -85,6 +85,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15p
 .entryrow .v{font-family:var(--mono);font-size:16px;font-weight:600}
 .rr{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:5px}
 .trighint{font-size:11px;color:var(--faint);font-family:var(--mono);margin:0 0 9px}
+.pnlrow{font-size:11px;color:var(--faint);font-family:var(--mono);margin:2px 0 9px}
+.pnlrow b{color:var(--ink)} .pnlrow b.pos{color:var(--long)} .pnlrow b.neg{color:var(--short)}
+table.led td.num.pos{color:var(--long)} table.led td.num.neg{color:var(--short)}
 .lv{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
 .lv td{padding:5px 0;border-top:1px solid var(--line);font-family:var(--mono)}
 .lv tr:first-child td{border-top:none}
@@ -172,7 +175,7 @@ table.led tfoot td{font-weight:700;background:var(--surface-2);border-top:2px so
   </div>
 </div>
 <script>
-const SIG=[{"sec": "Forex", "nm": "Sterlina / Dollaro", "code": "GBP/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairGBUS", "entry": "1,3211", "tgt": "1,3449", "tgtp": "+1,8%", "stop": "1,3132", "stopp": "−0,6%", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Forex", "nm": "Euro / Dollaro", "code": "EUR/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairEUUS", "entry": "1,1208", "tgt": "1,1410", "tgtp": "+1,8%", "stop": "1,1141", "stopp": "−0,6%", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Oro", "code": "XAU/USD", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "ingot", "entry": "4.132,3", "tgt": "4.281,1", "tgtp": "+3,6%", "stop": "4.082,7", "stopp": "−1,2%", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Petrolio WTI", "code": "USOIL", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "pending", "icon": "barrel", "entry": "93,45", "tgt": "99,06", "tgtp": "+6,0%", "stop": "91,58", "stopp": "−2,0%", "note": "Il segnale entra a 93,45: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "89,98", "trigp": "+3,9%"}, {"sec": "Commodity", "nm": "Bitcoin", "code": "BTC/USDT", "cls": "Cripto", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "pending", "icon": "btcDisc", "entry": "81.295", "tgt": "73.978", "tgtp": "−9,0%", "stop": "83.734", "stopp": "+3,0%", "note": "Il segnale entra a 81.295: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "82.709", "trigp": "−1,7%"}, {"sec": "Equity", "nm": "Dow Jones 30", "code": "US30", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 3, "pr": "3/5", "state": "pending", "icon": "fUS", "entry": "52.519", "tgt": "50.470", "tgtp": "−3,9%", "stop": "53.201", "stopp": "+1,3%", "note": "Il segnale entra a 52.519: lì prendiamo la posizione opposta. In attesa del trigger.", "mtm": "51.380", "trigp": "+2,2%"}, {"sec": "Equity", "nm": "Nasdaq 100", "code": "US100", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "31.392", "tgt": "30.167", "tgtp": "−3,9%", "stop": "31.800", "stopp": "+1,3%", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}, {"sec": "Equity", "nm": "DAX 40", "code": "DAX", "cls": "Indice EU", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fDE", "entry": "25.274", "tgt": "24.289", "tgtp": "−3,9%", "stop": "25.603", "stopp": "+1,3%", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}];
+const SIG=[{"sec": "Forex", "nm": "Sterlina / Dollaro", "code": "GBP/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairGBUS", "entry": "1,3209", "tgt": "1,3447", "tgtp": "+1,8%", "stop": "1,3130", "stopp": "−0,6%", "mtm": "1,3211", "pnl": "+0,02%", "pnlcls": "pos", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Forex", "nm": "Euro / Dollaro", "code": "EUR/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairEUUS", "entry": "1,1233", "tgt": "1,1435", "tgtp": "+1,8%", "stop": "1,1166", "stopp": "−0,6%", "mtm": "1,1208", "pnl": "−0,22%", "pnlcls": "neg", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Oro", "code": "XAU/USD", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "ingot", "entry": "4.149,6", "tgt": "4.299,0", "tgtp": "+3,6%", "stop": "4.099,8", "stopp": "−1,2%", "mtm": "4.132,3", "pnl": "−0,42%", "pnlcls": "neg", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Petrolio WTI", "code": "USOIL", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "pending", "icon": "barrel", "entry": "93,45", "tgt": "99,06", "tgtp": "+6,0%", "stop": "91,58", "stopp": "−2,0%", "mtm": "89,98", "pnl": null, "pnlcls": "", "trigp": "+3,9%", "note": "Il segnale entra a 93,45: lì prendiamo la posizione opposta. In attesa del trigger."}, {"sec": "Commodity", "nm": "Bitcoin", "code": "BTC/USDT", "cls": "Cripto", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "pending", "icon": "btcDisc", "entry": "81.295", "tgt": "73.978", "tgtp": "−9,0%", "stop": "83.734", "stopp": "+3,0%", "mtm": "82.709", "pnl": null, "pnlcls": "", "trigp": "−1,7%", "note": "Il segnale entra a 81.295: lì prendiamo la posizione opposta. In attesa del trigger."}, {"sec": "Equity", "nm": "Dow Jones 30", "code": "US30", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 3, "pr": "3/5", "state": "pending", "icon": "fUS", "entry": "52.519", "tgt": "50.470", "tgtp": "−3,9%", "stop": "53.201", "stopp": "+1,3%", "mtm": "51.380", "pnl": null, "pnlcls": "", "trigp": "+2,2%", "note": "Il segnale entra a 52.519: lì prendiamo la posizione opposta. In attesa del trigger."}, {"sec": "Equity", "nm": "Nasdaq 100", "code": "US100", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "31.076", "tgt": "29.864", "tgtp": "−3,9%", "stop": "31.480", "stopp": "+1,3%", "mtm": "31.392", "pnl": "−1,01%", "pnlcls": "neg", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}, {"sec": "Equity", "nm": "DAX 40", "code": "DAX", "cls": "Indice EU", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fDE", "entry": "25.255", "tgt": "24.270", "tgtp": "−3,9%", "stop": "25.583", "stopp": "+1,3%", "mtm": "25.274", "pnl": "−0,08%", "pnlcls": "neg", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}];
 const PERF={"aperte": 5, "in_attesa": 3, "chiuse": 1, "win_rate_%": 0.0, "R_totali": -1, "pl_totale_%": -1.3};
 (function(){
   const chiuse=PERF["chiuse"]||0;
@@ -209,7 +212,8 @@ function card(s){
     ? `<span class="statusline active"><span class="dotled"></span>A mercato</span>`
     : `<span class="statusline pending"><span class="dotled"></span>In attesa · trigger ${s.trigp}</span>`;
   const entryRow=act
-    ? `<div class="entryrow"><span class="l">Ingresso a mercato</span><span class="vv"><span class="v">${s.entry}</span><span class="rr">R:R 3:1</span></span></div>`
+    ? `<div class="entryrow"><span class="l">Ingresso a mercato</span><span class="vv"><span class="v">${s.entry}</span><span class="rr">R:R 3:1</span></span></div>
+       <div class="pnlrow">Prezzo attuale ${s.mtm} · P&L <b class="${s.pnlcls||''}">${s.pnl}</b></div>`
     : `<div class="entryrow"><span class="l">Trigger d'ingresso</span><span class="vv"><span class="v">${s.entry}</span><span class="rr">R:R 3:1</span></span></div>
        <div class="trighint">Prezzo attuale ${s.mtm} · la posizione scatta solo al trigger</div>`;
   return `
@@ -237,16 +241,17 @@ document.getElementById("sections").innerHTML=SECS.map(sec=>{
 }).join("");
 const nAct=SIG.filter(s=>s.state==="active").length, nPen=SIG.length-nAct;
 document.getElementById("led").innerHTML=`
- <thead><tr><th>Strumento</th><th>Radar</th><th>Ingresso</th><th>Obiettivo</th><th>Stop</th><th>Stato</th></tr></thead>
+ <thead><tr><th>Strumento</th><th>Radar</th><th>Ingresso</th><th>Obiettivo</th><th>Stop</th><th>P&L</th><th>Stato</th></tr></thead>
  <tbody>${SIG.map(r=>`<tr>
    <td class="sym">${r.nm}</td>
    <td><span class="dirtag ${r.dir}">${CAP(r.dir)}</span></td>
    <td class="num">${r.entry}</td>
    <td class="num">${r.tgt}</td>
    <td class="num">${r.stop}</td>
+   <td class="num ${r.state==="active"?(r.pnlcls||''):''}">${r.state==="active"?r.pnl:"—"}</td>
    <td><span class="stbadge ${r.state}">${r.state==="active"?"aperta":"in attesa"}</span></td></tr>`).join("")}
  </tbody>
- <tfoot><tr><td>Posizioni correnti</td><td></td><td></td><td></td><td></td><td>${nAct} a mercato · ${nPen} in attesa</td></tr></tfoot>`;
+ <tfoot><tr><td>Posizioni correnti</td><td></td><td></td><td></td><td></td><td></td><td>${nAct} a mercato · ${nPen} in attesa</td></tr></tfoot>`;
 </script>
 </body>
 </html>
