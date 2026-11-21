@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading Radar Tips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#eceff3; --surface:#ffffff; --surface-2:#f6f8fa; --band:#122038;
+  --ink:#14181f; --muted:#565f71; --faint:#8a93a4; --line:#e1e6ec;
+  --accent:#22418f; --accent-soft:#e7ecf8;
+  --long:#15754f; --long-med:#cbe8d7;
+  --short:#b23a28; --short-med:#f3cdc3;
+  --amber:#946410; --amber-bg:#f6ecd6;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;margin:0;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.sheet{max-width:820px;margin:0 auto;background:var(--surface);border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.pad{padding-left:clamp(16px,5vw,44px);padding-right:clamp(16px,5vw,44px)}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.masthead{background:var(--band);color:#f4f6fb;padding-top:26px;padding-bottom:24px;position:relative;overflow:hidden}
+.masthead>*{position:relative;z-index:1}
+.radar{position:absolute;right:-26px;top:-34px;width:240px;height:240px;z-index:0;opacity:.9;pointer-events:none}
+.radar svg{position:absolute;inset:0;width:100%;height:100%}
+.radar-sweep{position:absolute;left:38px;top:38px;width:164px;height:164px;border-radius:50%;
+  background:conic-gradient(from 0deg, rgba(150,180,255,.42) 0deg, rgba(150,180,255,.10) 32deg, rgba(150,180,255,0) 62deg, transparent 360deg);
+  animation:radarspin 4.6s linear infinite}
+.radar-blip{position:absolute;left:155px;top:71px;width:9px;height:9px;border-radius:50%;background:#8197d6;animation:blipglow 4.6s ease-out infinite}
+.radar-ripple{position:absolute;left:155px;top:71px;width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(170,195,255,.9);opacity:0;animation:blipripple 4.6s ease-out infinite}
+@keyframes radarspin{to{transform:rotate(360deg)}}
+@keyframes blipglow{0%,7%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}12%{background:#eef4ff;box-shadow:0 0 16px 6px rgba(165,195,255,.95)}26%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}100%{background:#7f96d7;box-shadow:0 0 2px 1px rgba(150,180,255,.25)}}
+@keyframes blipripple{0%,8%{transform:scale(1);opacity:0}13%{opacity:.85}32%{transform:scale(3.6);opacity:0}100%{transform:scale(3.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.radar-sweep,.radar-blip,.radar-ripple{animation:none}.radar-blip{background:#eef4ff;box-shadow:0 0 12px 4px rgba(165,195,255,.8)}.radar-ripple{opacity:0}}
+.masthead .eyebrow{color:#9fb0d6}
+.wordmark{font-family:var(--serif);font-weight:700;font-size:clamp(27px,6.5vw,38px);letter-spacing:.01em;line-height:1;margin:14px 0 0;text-wrap:balance}
+.wordmark .r{color:#aab9e4}
+.mh-tag{font-family:var(--serif);font-size:16px;color:#c6d1e8;font-style:italic;margin-top:6px;max-width:40ch}
+.mh-meta{font-family:var(--mono);font-size:11px;color:#9fb0d6;line-height:1.7;margin-top:14px}
+.lede{padding-top:24px;padding-bottom:8px}
+.lede .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.lede h2{font-family:var(--serif);font-weight:700;font-size:clamp(21px,4.5vw,25px);line-height:1.2;margin:0 0 10px;text-wrap:balance;letter-spacing:-.01em}
+.lede p{font-family:var(--serif);font-size:16.5px;color:var(--ink);margin:0 0 12px;max-width:62ch}
+.lede p.by{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
+.section{padding-top:24px;padding-bottom:4px}
+.shead{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:12px}
+.shead h3{font-family:var(--serif);font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
+.shead .meta{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+/* intestazione di traccia */
+.track-hd{display:flex;align-items:center;gap:12px;margin:8px 0 2px;padding:12px 16px;border-radius:12px;color:#fff}
+.track-hd.contrarian{background:linear-gradient(100deg,#8c2f22,#b23a28)}
+.track-hd.standard{background:linear-gradient(100deg,#115e40,#15754f)}
+.track-hd .tnum{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1;opacity:.55}
+.track-hd .ttl{font-family:var(--serif);font-size:20px;font-weight:700;line-height:1.1}
+.track-hd .sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.9;margin-top:3px}
+.track-block{border:1px solid var(--line);border-top:none;border-radius:0 0 12px 12px;padding:16px;margin-bottom:26px;background:var(--surface)}
+.secband{display:flex;align-items:center;gap:14px;margin:18px 0 12px}
+.secband:first-child{margin-top:4px}
+.secband .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--accent);padding:7px 15px;border-radius:8px;box-shadow:0 2px 0 0 rgba(34,65,143,.18)}
+.secband .ln{flex:1;height:2px;background:var(--accent);opacity:.18;border-radius:2px}
+.sig{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.sig{grid-template-columns:1fr}}
+.scard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.scard .hd{display:flex;justify-content:space-between;align-items:center;gap:11px;padding:12px 15px}
+.scard.long .hd{background:var(--long-med)} .scard.short .hd{background:var(--short-med)}
+.scard .hd .ic{flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:30px;background:#fff;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.09)}
+.scard .hd .nmwrap{min-width:0}
+.pair{display:inline-flex}.pair svg:nth-child(2){margin-left:-6px;margin-top:5px}
+.scard .nm{font-weight:700;font-size:16px;line-height:1.15}
+.scard .cls{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:3px}
+.dir{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:4px 11px;border-radius:999px;white-space:nowrap;color:#fff}
+.dir.long{background:var(--long)} .dir.short{background:var(--short)}
+.vs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 15px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;color:var(--muted)}
+.vs .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+.vs .ell{font-weight:600}.vs .ell.long{color:var(--long)}.vs .ell.short{color:var(--short)}
+.vs .stars{letter-spacing:1px;font-size:12px}.vs .stars .on{color:#b98a1e}.vs .stars .off{color:var(--line)}
+.scard .bd{padding:12px 15px 14px}
+.statusline{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.statusline.active{background:var(--long-med);color:var(--long)}
+.statusline.pending{background:var(--amber-bg);color:var(--amber)}
+.statusline .dotled{width:6px;height:6px;border-radius:50%;background:currentColor}
+.entryrow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 11px;margin-bottom:5px}
+.entryrow .l{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.entryrow .vv{display:flex;align-items:baseline;gap:8px}
+.entryrow .v{font-family:var(--mono);font-size:16px;font-weight:600}
+.rr{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:5px}
+.trighint{font-size:11px;color:var(--faint);font-family:var(--mono);margin:0 0 9px}
+.pnlrow{font-size:11px;color:var(--faint);font-family:var(--mono);margin:2px 0 9px}
+.pnlrow b{color:var(--ink)} .pnlrow b.pos{color:var(--long)} .pnlrow b.neg{color:var(--short)}
+table.led td.num.pos{color:var(--long)} table.led td.num.neg{color:var(--short)}
+.lv{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+.lv td{padding:5px 0;border-top:1px solid var(--line);font-family:var(--mono)}
+.lv tr:first-child td{border-top:none}
+.lv td.lab{font-family:var(--sans);font-size:12px;font-weight:600}
+.lv td.lab.tgt{color:var(--long)} .lv td.lab.inv{color:var(--short)}
+.lv td.num{text-align:right;color:var(--ink)}
+.lv td.pct{text-align:right;width:62px;font-weight:600}
+.lv td.pct.tgt{color:var(--long)} .lv td.pct.inv{color:var(--short)}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.dot.tgt{background:var(--long)} .dot.inv{background:var(--short)}
+.scard .note{font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.45;border-top:1px dotted var(--line);padding-top:9px}
+.perfstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0 12px}
+.perfstrip .pt{background:var(--surface);padding:11px 13px}
+.perfstrip .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.perfstrip .v{font-family:var(--serif);font-size:20px;font-weight:700;margin-top:3px;letter-spacing:-.01em}
+.perfstrip .v.pos{color:var(--long)} .perfstrip .v.neg{color:var(--short)}
+.perfstrip .v small{font-size:12px;color:var(--muted);font-weight:500}
+@media(max-width:560px){.perfstrip{grid-template-columns:repeat(2,1fr)}}
+.ledwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table.led{border-collapse:collapse;width:100%;min-width:640px;font-size:12.5px}
+table.led th,table.led td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line)}
+table.led th{background:var(--surface-2);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:500}
+table.led td:first-child,table.led th:first-child{text-align:left}
+table.led td.sym{font-weight:600}
+table.led .dirtag{font-family:var(--mono);font-size:10px;font-weight:700;padding:1px 8px;border-radius:999px;color:#fff}
+.dirtag.long{background:var(--long)} .dirtag.short{background:var(--short)}
+table.led td.num{font-family:var(--mono)}
+.stbadge{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px}
+.stbadge.active{background:var(--long-med);color:var(--long)} .stbadge.pending{background:var(--amber-bg);color:var(--amber)}
+table.led tfoot td{font-weight:700;background:var(--surface-2);border-top:2px solid var(--ink)}
+.ledger-note{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+.ledger-note b{color:var(--ink)}
+/* confronto */
+.cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-bottom:12px}
+table.cmp{border-collapse:collapse;width:100%;min-width:420px;font-size:13.5px}
+table.cmp th,table.cmp td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:right}
+table.cmp th:first-child,table.cmp td:first-child{text-align:left}
+table.cmp thead th{background:var(--surface-2);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:600}
+table.cmp thead th.c{color:var(--short)} table.cmp thead th.s{color:var(--long)}
+table.cmp td.lab{font-family:var(--sans);font-weight:600;color:var(--ink)}
+table.cmp td.val{font-family:var(--mono);font-weight:600}
+table.cmp td.val.pos{color:var(--long)} table.cmp td.val.neg{color:var(--short)}
+table.cmp tr.sub td{font-size:11px;color:var(--faint);font-family:var(--mono);padding-top:14px;border-bottom:none}
+.cmp-note{font-size:12px;color:var(--muted);margin:4px 0 0;line-height:1.5}
+.disclaimer{border-top:1px solid var(--line);margin-top:28px;padding-top:16px;padding-bottom:40px;font-size:11.5px;color:var(--faint);line-height:1.6}
+.disclaimer b{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead pad">
+    <div class="radar">
+      <svg viewBox="0 0 240 240" aria-hidden="true">
+        <g fill="none" stroke="#a9bdea" stroke-opacity="0.5" stroke-width="1">
+          <circle cx="120" cy="120" r="30" stroke-dasharray="2 4"/><circle cx="120" cy="120" r="56" stroke-dasharray="2 4"/><circle cx="120" cy="120" r="82" stroke-dasharray="2 4"/>
+        </g>
+        <g stroke="#b7c7ec" stroke-opacity="0.6" stroke-width="1"><line x1="120" y1="6" x2="120" y2="234"/><line x1="6" y1="120" x2="234" y2="120"/></g>
+      </svg>
+      <div class="radar-sweep"></div><div class="radar-ripple"></div><div class="radar-blip"></div>
+    </div>
+    <div class="eyebrow">Aggiornamento · confronto strategie</div>
+    <h1 class="wordmark">Trading <span class="r">Radar</span> Tips</h1>
+    <div class="mh-tag">Onde di Elliott: contro il segnale e con il segnale, a confronto</div>
+    <div class="mh-meta">Aggiornamento · sabato 21 novembre 2026 · timeframe H4</div>
+  </header>
+  <div class="lede pad">
+    <div class="kick">Aggiornamento</div>
+    <h2>Due strategie sullo stesso segnale: contro o con le Onde di Elliott</h2>
+    <p>Al sabato 21 novembre 2026 mettiamo a confronto, sugli stessi segnali a Onde di Elliott, due strategie speculari: <b>Contrarian</b> (posizione opposta al segnale) e <b>Standard</b> (si segue il segnale). Stessi strumenti, stesso ingresso, stop a volatilità e obiettivo a <b>rapporto 3:1</b>; cambia solo il verso. L'obiettivo è decidere, dati alla mano, quale delle due tenere.</p>
+    <p class="by">A cura di Andrea Giunta · elaborazione automatizzata · prezzi del 21 nov, mattina UTC (chiusura del 20 nov)</p>
+  </div>
+
+  <div class="section pad">
+    <div class="shead"><h3>Le due strategie a confronto</h3><span class="meta" id="cmpmeta"></span></div>
+    <div class="cmpwrap"><table class="cmp" id="cmp"></table></div>
+    <p class="cmp-note" id="cmpnote"></p>
+  </div>
+
+  <div class="section pad">
+    <div class="track-hd contrarian"><span class="tnum">A</span><div><div class="ttl">Strategia Contrarian</div><div class="sub">Posizione opposta al segnale a Onde di Elliott</div></div></div>
+    <div class="track-block">
+      <div id="sections-c"></div>
+      <div class="perfstrip" id="perfstrip-c"></div>
+      <div class="ledwrap"><table class="led" id="led-c"></table></div>
+    </div>
+    <div class="track-hd standard"><span class="tnum">B</span><div><div class="ttl">Strategia Standard</div><div class="sub">Si segue il segnale a Onde di Elliott</div></div></div>
+    <div class="track-block">
+      <div id="sections-s"></div>
+      <div class="perfstrip" id="perfstrip-s"></div>
+      <div class="ledwrap"><table class="led" id="led-s"></table></div>
+    </div>
+    <p class="ledger-note"><b>Come si legge.</b> Le due strategie partono dalla stessa serie di segnali: la <b>Contrarian</b> apre nel verso opposto, la <b>Standard</b> nel verso del segnale. Se il segnale è già attivo si apre <b>a mercato</b>; se prevede un ingresso a un livello, si resta <b>in attesa</b> del trigger. Lo <b>stop</b> è a volatilità (circa 1×ATR), l'<b>obiettivo</b> a tre volte il rischio: <b>R:R 3:1</b>. La riga si chiude al tocco dell'uno o dell'altro. La traccia Standard è seguita in avanti dalla data di avvio, in parallelo alla Contrarian.</p>
+  </div>
+
+  <div class="disclaimer pad">
+    <b>Avvertenza.</b> Trading Radar Tips è una newsletter di ricerca e intrattenimento finanziario a cura di Andrea Giunta, prodotta tramite elaborazione automatizzata di segnali basati sull'analisi delle Onde di Elliott. Non è consulenza personalizzata né sollecitazione all'investimento. I prezzi sono indicativi, aggregati da fonti pubbliche al momento della pubblicazione. Le performance passate e ipotetiche non garantiscono risultati futuri. Ogni decisione resta a carico del lettore.
+  </div>
+</div>
+<script>
+const SIG_C=[{"sec": "Forex", "nm": "Sterlina / Dollaro", "code": "GBP/USD", "cls": "Cambio", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "pairGBUS", "entry": "1,3080", "tgt": "1,2845", "tgtp": "−1,8%", "stop": "1,3158", "stopp": "+0,6%", "mtm": "1,3080", "pnl": "−0,00%", "pnlcls": "", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}, {"sec": "Forex", "nm": "Euro / Dollaro", "code": "EUR/USD", "cls": "Cambio", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairEUUS", "entry": "1,1013", "tgt": "1,1211", "tgtp": "+1,8%", "stop": "1,0947", "stopp": "−0,6%", "mtm": "1,0975", "pnl": "−0,35%", "pnlcls": "neg", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Oro", "code": "XAU/USD", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 3, "pr": "3/5", "state": "active", "icon": "ingot", "entry": "3.538,1", "tgt": "3.665,5", "tgtp": "+3,6%", "stop": "3.495,7", "stopp": "−1,2%", "mtm": "3.538,1", "pnl": "+0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Petrolio WTI", "code": "USOIL", "cls": "Materia prima", "dir": "long", "ell": "Short", "st": 3, "pr": "3/5", "state": "active", "icon": "barrel", "entry": "82,48", "tgt": "87,43", "tgtp": "+6,0%", "stop": "80,83", "stopp": "−2,0%", "mtm": "82,40", "pnl": "−0,10%", "pnlcls": "neg", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Equity", "nm": "Dow Jones 30", "code": "US30", "cls": "Indice USA", "dir": "short", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "49.059", "tgt": "47.146", "tgtp": "−3,9%", "stop": "49.697", "stopp": "+1,3%", "mtm": "48.391", "pnl": "+1,36%", "pnlcls": "pos", "note": "Segnale Elliott rialzista: prendiamo la posizione opposta a mercato."}, {"sec": "Equity", "nm": "Nasdaq 100", "code": "US100", "cls": "Indice USA", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "25.291", "tgt": "26.277", "tgtp": "+3,9%", "stop": "24.962", "stopp": "−1,3%", "mtm": "25.291", "pnl": "+0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Equity", "nm": "DAX 40", "code": "DAX", "cls": "Indice EU", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "fDE", "entry": "24.639", "tgt": "25.600", "tgtp": "+3,9%", "stop": "24.319", "stopp": "−1,3%", "mtm": "24.639", "pnl": "+0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}, {"sec": "Commodity", "nm": "Bitcoin", "code": "BTC/USDT", "cls": "Cripto", "dir": "long", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "btcDisc", "entry": "56.222", "tgt": "61.282", "tgtp": "+9,0%", "stop": "54.535", "stopp": "−3,0%", "mtm": "56.222", "pnl": "+0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione opposta a mercato."}], PERF_C={"aperte": 8, "in_attesa": 0, "chiuse": 40, "win_rate_%": 15.0, "R_totali": -16, "pl_totale_%": -24.3};
+const SIG_S=[{"sec": "Forex", "nm": "Sterlina / Dollaro", "code": "GBP/USD", "cls": "Cambio", "dir": "long", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "pairGBUS", "entry": "1,3080", "tgt": "1,3315", "tgtp": "+1,8%", "stop": "1,3002", "stopp": "−0,6%", "mtm": "1,3080", "pnl": "+0,00%", "pnlcls": "", "note": "Segnale Elliott rialzista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Forex", "nm": "Euro / Dollaro", "code": "EUR/USD", "cls": "Cambio", "dir": "short", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "pairEUUS", "entry": "1,0982", "tgt": "1,0784", "tgtp": "−1,8%", "stop": "1,1048", "stopp": "+0,6%", "mtm": "1,0975", "pnl": "+0,06%", "pnlcls": "pos", "note": "Segnale Elliott ribassista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Commodity", "nm": "Oro", "code": "XAU/USD", "cls": "Materia prima", "dir": "short", "ell": "Short", "st": 3, "pr": "3/5", "state": "active", "icon": "ingot", "entry": "3.538,1", "tgt": "3.410,7", "tgtp": "−3,6%", "stop": "3.580,6", "stopp": "+1,2%", "mtm": "3.538,1", "pnl": "−0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Commodity", "nm": "Petrolio WTI", "code": "USOIL", "cls": "Materia prima", "dir": "short", "ell": "Short", "st": 3, "pr": "3/5", "state": "active", "icon": "barrel", "entry": "82,48", "tgt": "77,53", "tgtp": "−6,0%", "stop": "84,13", "stopp": "+2,0%", "mtm": "82,40", "pnl": "+0,10%", "pnlcls": "pos", "note": "Segnale Elliott ribassista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Equity", "nm": "Dow Jones 30", "code": "US30", "cls": "Indice USA", "dir": "long", "ell": "Long", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "48.391", "tgt": "50.278", "tgtp": "+3,9%", "stop": "47.762", "stopp": "−1,3%", "mtm": "48.391", "pnl": "+0,00%", "pnlcls": "", "note": "Segnale Elliott rialzista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Equity", "nm": "Nasdaq 100", "code": "US100", "cls": "Indice USA", "dir": "short", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "fUS", "entry": "25.291", "tgt": "24.305", "tgtp": "−3,9%", "stop": "25.620", "stopp": "+1,3%", "mtm": "25.291", "pnl": "−0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Equity", "nm": "DAX 40", "code": "DAX", "cls": "Indice EU", "dir": "short", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "fDE", "entry": "24.639", "tgt": "23.678", "tgtp": "−3,9%", "stop": "24.959", "stopp": "+1,3%", "mtm": "24.639", "pnl": "−0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione nello stesso verso del segnale."}, {"sec": "Commodity", "nm": "Bitcoin", "code": "BTC/USDT", "cls": "Cripto", "dir": "short", "ell": "Short", "st": 4, "pr": "4/5", "state": "active", "icon": "btcDisc", "entry": "56.222", "tgt": "51.162", "tgtp": "−9,0%", "stop": "57.909", "stopp": "+3,0%", "mtm": "56.222", "pnl": "−0,00%", "pnlcls": "", "note": "Segnale Elliott ribassista: prendiamo la posizione nello stesso verso del segnale."}], PERF_S={"aperte": 8, "in_attesa": 0, "chiuse": 4, "win_rate_%": 25.0, "R_totali": 0, "pl_totale_%": 5.1};
+const CMP={"start_c": "2026-10-02", "start_s": "2026-11-20", "common_start": "2026-11-20", "full_c": {"aperte": 8, "in_attesa": 0, "chiuse": 40, "win_rate_%": 15.0, "R_totali": -16, "pl_totale_%": -24.3}, "full_s": {"aperte": 8, "in_attesa": 0, "chiuse": 4, "win_rate_%": 25.0, "R_totali": 0, "pl_totale_%": 5.1}, "win_c": {"chiuse": 1, "win_rate_%": 0.0, "R_totali": -1, "pl_totale_%": -3.0}, "win_s": {"chiuse": 4, "win_rate_%": 25.0, "R_totali": 0, "pl_totale_%": 5.1}};
+const SECS=["Forex","Commodity","Equity"];
+const CAP=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const IC={};
+IC.fUS=`<svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="2" fill="#fff"/><g fill="#b22234"><rect width="26" height="2.57"/><rect y="5.14" width="26" height="2.57"/><rect y="10.28" width="26" height="2.57"/><rect y="15.43" width="26" height="2.57"/></g><rect width="11" height="10.28" rx="1" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.4" cy="2.2" r=".7"/><circle cx="5.5" cy="2.2" r=".7"/><circle cx="8.6" cy="2.2" r=".7"/><circle cx="4" cy="5.1" r=".7"/><circle cx="7" cy="5.1" r=".7"/><circle cx="2.4" cy="8" r=".7"/><circle cx="5.5" cy="8" r=".7"/><circle cx="8.6" cy="8" r=".7"/></g></svg>`;
+IC.fGB=`<svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="2" fill="#012169"/><g stroke="#fff" stroke-width="3"><path d="M0 0 L26 18"/><path d="M26 0 L0 18"/></g><g stroke="#C8102E" stroke-width="1.4"><path d="M0 0 L26 18"/><path d="M26 0 L0 18"/></g><rect x="10.5" width="5" height="18" fill="#fff"/><rect y="6.5" width="26" height="5" fill="#fff"/><rect x="11.6" width="2.8" height="18" fill="#C8102E"/><rect y="7.6" width="26" height="2.8" fill="#C8102E"/></svg>`;
+IC.fEU=`<svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="2" fill="#003399"/><g fill="#FFCC00">${Array.from({length:12},(_,k)=>{const a=k/12*2*Math.PI-Math.PI/2;return `<circle cx="${(13+5.4*Math.cos(a)).toFixed(1)}" cy="${(9+5.4*Math.sin(a)).toFixed(1)}" r="1"/>`}).join("")}</g></svg>`;
+IC.fDE=`<svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="2" fill="#111"/><rect y="6" width="26" height="6" fill="#DD0000"/><rect y="12" width="26" height="6" fill="#FFCE00"/></svg>`;
+IC.ingot=`<svg width="24" height="24" viewBox="0 0 24 24"><polygon points="4,12 18,12 21,9 7,9" fill="#F3CB54"/><polygon points="18,12 21,9 21,17 18,20" fill="#C8901A"/><polygon points="4,12 18,12 18,20 4,20" fill="#E0A81E"/></svg>`;
+IC.barrel=`<svg width="24" height="24" viewBox="0 0 24 24"><rect x="6" y="3.5" width="12" height="17" rx="2.4" fill="#2f3136"/><ellipse cx="12" cy="4.6" rx="6" ry="1.9" fill="#47494f"/><rect x="6" y="8.4" width="12" height="1.7" fill="#6b6e75"/><rect x="6" y="13.9" width="12" height="1.7" fill="#6b6e75"/></svg>`;
+IC.btcDisc=`<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F7931A"/><text x="12" y="16.6" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" font-weight="700" fill="#fff">&#8383;</text></svg>`;
+IC.pairGBUS=`<span class="pair">${IC.fGB.replace('width="26" height="18"','width="21" height="14.5"')}${IC.fUS.replace('width="26" height="18"','width="21" height="14.5"')}</span>`;
+IC.pairEUUS=`<span class="pair">${IC.fEU.replace('width="26" height="18"','width="21" height="14.5"')}${IC.fUS.replace('width="26" height="18"','width="21" height="14.5"')}</span>`;
+function stars(n){let s="";for(let i=0;i<5;i++)s+=`<span class="${i<n?'on':'off'}">★</span>`;return `<span class="stars">${s}</span>`}
+function card(s, follow){
+  const act=s.state==="active";
+  const rel = follow ? "Segue il segnale" : "Contro segnale";
+  const statusChip=act
+    ? `<span class="statusline active"><span class="dotled"></span>A mercato</span>`
+    : `<span class="statusline pending"><span class="dotled"></span>In attesa · trigger ${s.trigp}</span>`;
+  const entryRow=act
+    ? `<div class="entryrow"><span class="l">Ingresso a mercato</span><span class="vv"><span class="v">${s.entry}</span><span class="rr">R:R 3:1</span></span></div>
+       <div class="pnlrow">Prezzo attuale ${s.mtm} · P&L <b class="${s.pnlcls||''}">${s.pnl}</b></div>`
+    : `<div class="entryrow"><span class="l">Trigger d'ingresso</span><span class="vv"><span class="v">${s.entry}</span><span class="rr">R:R 3:1</span></span></div>
+       <div class="trighint">Prezzo attuale ${s.mtm} · la posizione scatta solo al trigger</div>`;
+  return `
+ <div class="scard ${s.dir}">
+   <div class="hd">
+     <span class="ic">${IC[s.icon]||""}</span>
+     <div class="nmwrap"><div class="nm">${s.nm}</div><div class="cls">${s.cls} · ${s.code}</div></div>
+     <span class="dir ${s.dir}">${CAP(s.dir)}</span>
+   </div>
+   <div class="vs"><span class="k">${rel}</span><span class="ell ${s.ell.toLowerCase()}">Elliott ${s.ell}</span><span class="k" style="margin-left:auto">conv.</span>${stars(s.st)}<span class="mono" style="font-weight:600">${s.pr}</span></div>
+   <div class="bd">
+     ${statusChip}
+     ${entryRow}
+     <table class="lv"><tbody>
+       <tr><td class="lab tgt"><span class="dot tgt"></span>Obiettivo</td><td class="num">${s.tgt}</td><td class="pct tgt">${s.tgtp}</td></tr>
+       <tr><td class="lab inv"><span class="dot inv"></span>Stop</td><td class="num">${s.stop}</td><td class="pct inv">${s.stopp}</td></tr>
+     </tbody></table>
+     <div class="note">${s.note}</div>
+   </div>
+ </div>`}
+function renderSections(elId, SIG, follow){
+  document.getElementById(elId).innerHTML=SECS.map(sec=>{
+    const items=SIG.filter(s=>s.sec===sec);
+    if(!items.length) return "";
+    return `<div class="secband"><span class="lbl">${sec}</span><span class="ln"></span></div><div class="sig">${items.map(s=>card(s,follow)).join("")}</div>`;
+  }).join("");
+}
+function renderPerf(elId, PERF){
+  const chiuse=PERF["chiuse"]||0;
+  const wr = PERF["win_rate_%"]==null ? "—" : String(PERF["win_rate_%"]).replace(".",",")+"%";
+  const Rtot = PERF["R_totali"]||0, pl = PERF["pl_totale_%"]||0;
+  const Rs = (Rtot>0?"+":"")+String(Rtot).replace(".",",")+" R";
+  const pls = (pl>=0?"+":"−")+Math.abs(pl).toFixed(2).replace(".",",")+"%";
+  const cls=x=>x>0?"pos":(x<0?"neg":"");
+  const tiles=[
+    ["Operazioni chiuse", String(chiuse), ""],
+    ["Win rate", wr, ""],
+    ["R totali", chiuse?Rs:"—", chiuse?cls(Rtot):""],
+    ["P/L cumulato", chiuse?pls:"—", chiuse?cls(pl):""],
+  ];
+  document.getElementById(elId).innerHTML = tiles.map(t=>
+    `<div class="pt"><div class="k">${t[0]}</div><div class="v ${t[2]}">${t[1]}</div></div>`).join("");
+}
+function renderLed(elId, SIG){
+  const nAct=SIG.filter(s=>s.state==="active").length, nPen=SIG.length-nAct;
+  document.getElementById(elId).innerHTML=`
+   <thead><tr><th>Strumento</th><th>Radar</th><th>Ingresso</th><th>Obiettivo</th><th>Stop</th><th>P&L</th><th>Stato</th></tr></thead>
+   <tbody>${SIG.map(r=>`<tr>
+     <td class="sym">${r.nm}</td>
+     <td><span class="dirtag ${r.dir}">${CAP(r.dir)}</span></td>
+     <td class="num">${r.entry}</td>
+     <td class="num">${r.tgt}</td>
+     <td class="num">${r.stop}</td>
+     <td class="num ${r.state==="active"?(r.pnlcls||''):''}">${r.state==="active"?r.pnl:"—"}</td>
+     <td><span class="stbadge ${r.state}">${r.state==="active"?"aperta":"in attesa"}</span></td></tr>`).join("")}
+   </tbody>
+   <tfoot><tr><td>Posizioni correnti</td><td></td><td></td><td></td><td></td><td></td><td>${nAct} a mercato · ${nPen} in attesa</td></tr></tfoot>`;
+}
+function fmtR(x){return (x>0?"+":(x<0?"−":""))+Math.abs(x).toString().replace(".",",")+" R";}
+function fmtPL(x){return (x>=0?"+":"−")+Math.abs(x).toFixed(2).replace(".",",")+"%";}
+function fmtWR(x){return x==null?"—":String(x).replace(".",",")+"%";}
+function clsnum(x){return x>0?"pos":(x<0?"neg":"");}
+function row(lab, cVal, sVal, cCls, sCls){
+  return `<tr><td class="lab">${lab}</td><td class="val ${cCls||''}">${cVal}</td><td class="val ${sCls||''}">${sVal}</td></tr>`;
+}
+function renderCmp(){
+  const fc=CMP.full_c, fs=CMP.full_s, wc=CMP.win_c, ws=CMP.win_s;
+  let h=`<thead><tr><th>Metrica</th><th class="c">Contrarian</th><th class="s">Standard</th></tr></thead><tbody>`;
+  h+=`<tr class="sub"><td colspan="3">Record completo di ciascuna strategia</td></tr>`;
+  h+=row("Operazioni chiuse", fc.chiuse, fs.chiuse);
+  h+=row("Win rate", fmtWR(fc["win_rate_%"]), fmtWR(fs["win_rate_%"]));
+  h+=row("R totali", fc.chiuse?fmtR(fc.R_totali):"—", fs.chiuse?fmtR(fs.R_totali):"—", fc.chiuse?clsnum(fc.R_totali):"", fs.chiuse?clsnum(fs.R_totali):"");
+  h+=row("P/L cumulato", fc.chiuse?fmtPL(fc["pl_totale_%"]):"—", fs.chiuse?fmtPL(fs["pl_totale_%"]):"—", fc.chiuse?clsnum(fc["pl_totale_%"]):"", fs.chiuse?clsnum(fs["pl_totale_%"]):"");
+  if(CMP.common_start){
+    h+=`<tr class="sub"><td colspan="3">A parità di periodo (dal ${CMP.common_start})</td></tr>`;
+    h+=row("Operazioni chiuse", wc.chiuse, ws.chiuse);
+    h+=row("Win rate", fmtWR(wc["win_rate_%"]), fmtWR(ws["win_rate_%"]));
+    h+=row("R totali", wc.chiuse?fmtR(wc.R_totali):"—", ws.chiuse?fmtR(ws.R_totali):"—", wc.chiuse?clsnum(wc.R_totali):"", ws.chiuse?clsnum(ws.R_totali):"");
+    h+=row("P/L cumulato", wc.chiuse?fmtPL(wc["pl_totale_%"]):"—", ws.chiuse?fmtPL(ws["pl_totale_%"]):"—", wc.chiuse?clsnum(wc["pl_totale_%"]):"", ws.chiuse?clsnum(ws["pl_totale_%"]):"");
+  }
+  h+=`</tbody>`;
+  document.getElementById("cmp").innerHTML=h;
+  document.getElementById("cmpmeta").textContent = "R:R 3:1 · dati netti";
+  const startC = CMP.start_c||"—", startS = CMP.start_s||"—";
+  let note = `La <b>Contrarian</b> raccoglie operazioni dal ${startC}; la <b>Standard</b> è tracciata in avanti dal ${startS}. `;
+  if(CMP.common_start && (CMP.win_c.chiuse||CMP.win_s.chiuse)){
+    note += "Il blocco \"a parità di periodo\" confronta le due strategie sulle sole operazioni chiuse dalla data di avvio della Standard.";
+  } else {
+    note += "Il confronto a parità di periodo diventa significativo man mano che la Standard accumula operazioni chiuse.";
+  }
+  document.getElementById("cmpnote").innerHTML=note;
+}
+renderCmp();
+renderSections("sections-c", SIG_C, false); renderPerf("perfstrip-c", PERF_C); renderLed("led-c", SIG_C);
+renderSections("sections-s", SIG_S, true ); renderPerf("perfstrip-s", PERF_S); renderLed("led-s", SIG_S);
+</script>
+</body>
+</html>
